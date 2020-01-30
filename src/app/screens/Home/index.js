@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { View, TouchableNativeFeedback, ProgressBarAndroid, ScrollView, Text } from 'react-native';
+import { View, ProgressBarAndroid, Alert } from 'react-native';
 import IconFA from 'react-native-vector-icons/FontAwesome';
 import { styles } from './style';
 import axios from '../../../utils/axios';
@@ -84,6 +84,35 @@ class Home extends Component {
         }
     }
 
+    /**
+     * @description Navega hasta el screen de Details
+     */
+    goToDetails = (pokemonName) => {
+        this.props.navigation.navigate('Details', pokemonName);
+    }
+
+    /**
+     * @description Busca un pokemon del API
+     */
+    searchPokemon = async (pokemonName) => {
+        try {
+            const {data} = await axios.get(`/pokemon/${pokemonName.toLowerCase()}`);
+            if (data) {
+                this.goToDetails(pokemonName.toLowerCase());
+            }
+        } catch(error) {
+            console.log(error);
+            if (error.response) {
+                if (Number(error.response.status) === 404) {
+                    Alert.alert('This pokemon does not exist', `"${pokemonName}" does not exist`,
+                    [
+                        {text: 'Accept'}
+                    ])
+                }
+            }
+        }
+    }
+
     render() {
         return(
             <HomeLayout>
@@ -92,6 +121,7 @@ class Home extends Component {
                     mode="none" 
                     search={this.state.isSearch} 
                     onChangeSearch={this.changeSearch}
+                    onSearch={this.searchPokemon}
                 >
                     <ButtonIcon 
                         onPress={this.changeSearch}
@@ -104,7 +134,11 @@ class Home extends Component {
                     />                         
                 </Header>
                 {/* LIST OF THE POKEMONS */}
-                <ListOfPokemon list={this.state.pokemons} onEndReached={this.getMorePokemons} />
+                <ListOfPokemon 
+                    list={this.state.pokemons} 
+                    onEndReached={this.getMorePokemons} 
+                    navigation={this.props.navigation} 
+                />
                 
                 {
                     this.state.loadingMore && this.state.canMore &&

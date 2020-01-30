@@ -7,8 +7,12 @@ import LinearGradient from 'react-native-linear-gradient';
 import IconFa from 'react-native-vector-icons/FontAwesome';
 import { ButtonIcon } from '../ButtonIcon';
 
-export const Header = ({children, title, mode = 'back', navigation, search = false, onChangeSearch}) => {
+export const Header = ({children, title, mode = 'back', navigation, search = false, onChangeSearch, onSearch}) => {
     const [pokemonSearch, setPokemonSearch] = useState('');
+
+    const searchPokemon = () => {
+        onSearch(pokemonSearch)
+    }
 
     return(
         <SafeAreaView>
@@ -41,11 +45,13 @@ export const Header = ({children, title, mode = 'back', navigation, search = fal
                     <TextInput style={styles.inputSearch} 
                         placeholder="Search..." 
                         autoFocus
-                        onChange={(event) => setPokemonSearch(event.target.value)}
+                        onChange={(event) => setPokemonSearch(event.nativeEvent.text)}
+                        onSubmitEditing={searchPokemon}
                     />
                     <View style={styles.iconSearchContainer}>
                         <ButtonIcon 
                             icon={<IconFa name="search" color="red" size={20} />}
+                            onPress={searchPokemon}
                         />
                     </View>
                 </View>

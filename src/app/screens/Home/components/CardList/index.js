@@ -4,7 +4,7 @@ import { styles } from './style';
 import axios from '../../../../../utils/axios';
 import { PokemonTypeCard } from '../../../../components/PokemonTypeCard';
 
-export const CardList = ({name}) => {
+export const CardList = ({name, navigation}) => {
     const [pokemon, setPokemon] = useState(null);
 
     useEffect(() => {
@@ -18,7 +18,10 @@ export const CardList = ({name}) => {
     }, [])
 
     return(
-        <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple('black')}>
+        <TouchableNativeFeedback 
+            background={TouchableNativeFeedback.Ripple('black')}
+            onPress={() => navigation.navigate('Details', name)}
+        >
             <View style={styles.container}>
                 <View style={styles.left}>
                     {
