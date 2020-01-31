@@ -27,9 +27,31 @@ export const styles = StyleSheet.create({
     },
     dimensionText: {
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: 'gray'
     },
     dimensionSpan: {
-        fontWeight: 'normal'
-    }
+        fontWeight: 'normal',
+        color: '#424242'
+    },
+    spritesContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginTop: 10,
+        justifyContent: 'center'
+    },
+    titleSprites: {
+        width: '100%',
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'gray',
+        marginTop: 15
+    },
+    evolutionsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 10
+    },
+
 })

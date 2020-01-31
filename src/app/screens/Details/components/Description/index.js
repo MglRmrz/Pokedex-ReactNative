@@ -1,6 +1,9 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { styles } from './style';
+import { PhotoSprite } from '../PhotoSprite';
+import { CardEvolution } from '../CardEvolution';
+import IconFa5 from 'react-native-vector-icons/FontAwesome5';
 
 export const Description = ({pokemon}) => {
 
@@ -32,10 +35,15 @@ export const Description = ({pokemon}) => {
 
     return(
         <View style={styles.container}>
+            {/* DESCRIPTON */}
             <Text style={styles.title}>Description</Text>
+            <Text style={styles.description}>
+                {replaceString(getDescription(pokemon.genera).genus)}.
+            </Text>
             <Text style={styles.description}>
                 {replaceString(getDescription(pokemon.flavor_text_entries).flavor_text)}
             </Text>
+            {/* DIMENSIONS */}
             <View style={styles.dimensionsContainer}>
                 <Text style={styles.dimensionText}>
                     Weight: <Text style={styles.dimensionSpan}>{placePoint(pokemon.weight)} Kg</Text>
@@ -44,6 +52,66 @@ export const Description = ({pokemon}) => {
                     Height: <Text style={styles.dimensionSpan}>{(pokemon.height / 10)} m</Text>
                 </Text>
             </View>
+            {/* SPRITES */}
+            <Text style={styles.titleSprites}>Sprites</Text>
+            <View style={styles.spritesContainer}>
+                <PhotoSprite image={pokemon.sprites.front_default} gender="Male" />
+                <PhotoSprite image={pokemon.sprites.back_default} />
+                {
+                    pokemon.sprites.front_female && 
+                    <PhotoSprite image={pokemon.sprites.front_female} gender="Female" />
+                }
+                {
+                    pokemon.sprites.back_female && 
+                    <PhotoSprite image={pokemon.sprites.back_female} />
+                }
+                {
+                    !pokemon.sprites.back_female && pokemon.sprites.front_female &&
+                    <PhotoSprite image={pokemon.sprites.back_default} />
+                }
+                {
+                    pokemon.sprites.front_shiny && 
+                    <PhotoSprite image={pokemon.sprites.front_shiny} gender="Male Shiny" />
+                }
+                {
+                    pokemon.sprites.back_shiny && 
+                    <PhotoSprite image={pokemon.sprites.back_shiny} />
+                }
+                {
+                    pokemon.sprites.front_shiny_female && 
+                    <PhotoSprite image={pokemon.sprites.front_shiny_female} gender="Female Shiny" />
+                }
+                {
+                    pokemon.sprites.back_shiny_female && 
+                    <PhotoSprite image={pokemon.sprites.back_shiny_female} />
+                }
+                {
+                    !pokemon.sprites.back_shiny_female && pokemon.sprites.front_shiny_female &&
+                    <PhotoSprite image={pokemon.sprites.back_shiny_male} />
+                }
+            </View>
+            {/* EVOLUTION LINE */}
+            <Text style={styles.title}>Evolution line</Text>
+            <View style={styles.evolutionsContainer}>
+                <View style={styles.evolutionsContainer}>
+                    <CardEvolution pokemonUrl={pokemon.chain.species.url} />
+                </View>
+                {
+                    pokemon.chain.evolves_to.length > 0 &&
+                    <View style={styles.evolutionsContainer}>
+                        <IconFa5 name="long-arrow-alt-right" size={30} color="gray" />
+                        <CardEvolution pokemonUrl={pokemon.chain.evolves_to[0].species.url} />
+                    </View>
+                }
+                {
+                    pokemon.chain.evolves_to.length > 0 && pokemon.chain.evolves_to[0].evolves_to.length > 0 && 
+                    <View style={styles.evolutionsContainer}>
+                        <IconFa5 name="long-arrow-alt-right" size={30} color="gray" />
+                        <CardEvolution pokemonUrl={pokemon.chain.evolves_to[0].evolves_to[0].species.url} />
+                    </View>
+                }
+            </View>
+            
         </View>
     )
 }

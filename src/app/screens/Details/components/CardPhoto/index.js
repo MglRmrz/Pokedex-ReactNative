@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, Text } from 'react-native';
 import { styles } from './style';
 
 import { PokemonTypeCard } from '../../../../components/PokemonTypeCard';
@@ -7,6 +7,7 @@ import { PokemonTypeCard } from '../../../../components/PokemonTypeCard';
 export const CardPhoto = ({pokemon}) => {
     return(
         <View style={styles.container}>
+            <Text style={styles.pokedexPosition}>Pokedex N°{pokemon.id}</Text>
             <View style={styles.photoContainer}>
                 <Image style={styles.imagePokemon}
                     source={{

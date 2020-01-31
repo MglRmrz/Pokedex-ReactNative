@@ -21,5 +21,12 @@ export const styles = StyleSheet.create({
         width: 150,
         height: 150,
         resizeMode: 'contain'
+    },
+    pokedexPosition: {
+        position: 'absolute',
+        top: 10,
+        paddingLeft: 15,
+        fontWeight: 'bold',
+        color: '#424242'
     }
 });
