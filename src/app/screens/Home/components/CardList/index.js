@@ -20,7 +20,7 @@ export const CardList = ({name, navigation}) => {
     return(
         <TouchableNativeFeedback 
             background={TouchableNativeFeedback.Ripple('black')}
-            onPress={() => navigation.navigate('Details', name)}
+            onPress={() => navigation.navigate('Details', {name})}
         >
             <View style={styles.container}>
                 <View style={styles.left}>

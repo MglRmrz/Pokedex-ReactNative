@@ -88,7 +88,7 @@ class Home extends Component {
      * @description Navega hasta el screen de Details
      */
     goToDetails = (pokemonName) => {
-        this.props.navigation.navigate('Details', pokemonName);
+        this.props.navigation.navigate('Details', {name: pokemonName});
     }
 
     /**
