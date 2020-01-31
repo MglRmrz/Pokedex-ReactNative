@@ -5,6 +5,7 @@ import { DetailsLayout } from './components/DetailsLayout';
 import { Loading } from './components/Loading';
 import axios from '../../../utils/axios';
 import { CardPhoto } from './components/CardPhoto';
+import { Description } from './components/Description';
 
 class Details extends Component {
     state = {
@@ -15,8 +16,9 @@ class Details extends Component {
     async componentDidMount() {
         const pokemonName = this.props.navigation.getParam('name', 'default value');
         try {
-            const {data} = await axios.get(`/pokemon/${pokemonName}`);
-            this.setState({pokemon: data, loading: false});
+            const pokemon = await axios.get(`/pokemon/${pokemonName}`);
+            const extra = await axios.get(`pokemon-species/${pokemonName}`)
+            this.setState({pokemon: {...pokemon.data, ...extra.data}, loading: false});
         } catch (error) {
             console.log(error);
         }
@@ -40,10 +42,11 @@ class Details extends Component {
                     </View> :
                     <View>
                         <Header title={this.toCapitalize(this.state.pokemon.name)} navigation={this.props.navigation} />
-                            <ScrollView>
-                                <CardPhoto pokemon={this.state.pokemon} />
-                            </ScrollView>
-                        </View>
+                        <ScrollView>
+                            <CardPhoto pokemon={this.state.pokemon} />
+                            <Description pokemon={this.state.pokemon} />
+                        </ScrollView>
+                    </View>
                 }
             </DetailsLayout>
         )
