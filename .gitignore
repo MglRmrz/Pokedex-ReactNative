@@ -122,7 +122,7 @@ temp/
 
 ### ReactNative.Android Stack ###
 # Built application files
-*.apk
+# *.apk
 *.ap_
 *.aab
 
