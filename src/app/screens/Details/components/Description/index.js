@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import { styles } from './style';
 import { PhotoSprite } from '../PhotoSprite';
 import { CardEvolution } from '../CardEvolution';
 import IconFa5 from 'react-native-vector-icons/FontAwesome5';
+import { Stat } from '../Stat';
 
 export const Description = ({pokemon}) => {
 
@@ -111,7 +112,15 @@ export const Description = ({pokemon}) => {
                     </View>
                 }
             </View>
-            
+            {/* STATS */}
+            <Text style={styles.title}>Base stats</Text>
+            <View style={styles.statsList}>
+                <FlatList 
+                    data={pokemon.stats}
+                    keyExtractor={({index}) => index}
+                    renderItem={({item}) => <Stat item={item} />}
+                />
+            </View>
         </View>
     )
 }

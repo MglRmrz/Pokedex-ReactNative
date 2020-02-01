@@ -53,5 +53,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 10
     },
-
+    statsList: {
+        marginTop: 15
+    }
 })
